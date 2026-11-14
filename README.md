@@ -118,7 +118,10 @@ Every push to `wireframe`, `stage` or `main` runs `.github/workflows/deploy.yml`
 Only `production` is indexable. The other environments get `Disallow: /` in robots.txt and
 a `noindex` meta tag.
 
-New images on GHCR are private. Leave them private: the server pulls them with its own token.
+Image visibility follows the repository in practice. On 2026-11-14 the image pushed from this
+public template could be pulled anonymously, so it is public. GitHub documents new packages as
+private by default, which is what a private site repository gets. The server pulls private
+images with the token saved under Coolify's Registries, see below.
 
 ## Variables and secrets
 
