@@ -1,0 +1,39 @@
+# syntax=docker/dockerfile:1
+# server-rendered site, nitro node server on port 3000
+
+ARG NODE_IMAGE=node:26.13-alpine
+
+FROM ${NODE_IMAGE} AS build
+ARG PNPM_VERSION=12.18.0
+RUN npm install -g pnpm@${PNPM_VERSION}
+WORKDIR /app
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm fetch --store-dir /pnpm/store
+
+COPY . .
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm install --offline --frozen-lockfile --store-dir /pnpm/store
+
+# build-time defaults, override at runtime with the same variables in coolify
+ARG NUXT_SITE_URL=https://example.com
+ARG NUXT_SITE_ENV=production
+ENV NUXT_SITE_URL=${NUXT_SITE_URL} \
+    NUXT_SITE_ENV=${NUXT_SITE_ENV} \
+    NUXT_TELEMETRY_DISABLED=1
+RUN pnpm build
+
+FROM ${NODE_IMAGE}
+ARG NUXT_SITE_URL=https://example.com
+ARG NUXT_SITE_ENV=production
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
+    PORT=3000 \
+    NUXT_SITE_URL=${NUXT_SITE_URL} \
+    NUXT_SITE_ENV=${NUXT_SITE_ENV}
+WORKDIR /app
+COPY --from=build --chown=node:node /app/.output ./.output
+USER node
+EXPOSE 3000
+CMD ["node", ".output/server/index.mjs"]

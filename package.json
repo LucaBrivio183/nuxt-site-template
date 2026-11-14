@@ -1,0 +1,42 @@
+{
+  "name": "nuxt-site-template",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=26.13.0"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "1.2.154",
+    "@nuxt/fonts": "1.2.0",
+    "@nuxt/image": "2.2.1",
+    "@nuxt/ui": "4.12.0",
+    "@nuxtjs/seo": "6.0.1",
+    "motion-v": "2.12.0",
+    "nuxt": "4.6.4",
+    "tailwindcss": "4.3.5",
+    "vue": "3.5.45",
+    "vue-router": "5.5.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "1.17.0",
+    "@nuxt/test-utils": "4.4.0",
+    "@vue/test-utils": "2.5.1",
+    "eslint": "10.15.0",
+    "happy-dom": "21.0.4",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0",
+    "vue-tsc": "3.3.14"
+  }
+}
