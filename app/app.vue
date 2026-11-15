@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { MotionConfig } from 'motion-v'
 
+const site = useSiteConfig()
+
 const links = [
   { label: 'Home', to: '/' },
   { label: 'Playground', to: '/playground' },
@@ -12,14 +14,14 @@ const links = [
     <MotionConfig reduced-motion="user">
       <header class="border-b border-default">
         <nav
-          class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6"
+          class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6"
           aria-label="Main"
         >
           <NuxtLink
             to="/"
             class="font-display text-lg font-semibold tracking-tight"
           >
-            nuxt-site-template
+            {{ site.name }}
           </NuxtLink>
           <div class="flex items-center gap-1">
             <UButton
